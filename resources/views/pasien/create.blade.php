@@ -3,7 +3,7 @@
 @section('title', 'Tambah Pasien Baru')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border-0">
@@ -12,40 +12,70 @@
                 </div>
                 <div class="card-body p-4">
                     
+                    {{-- Pastikan Route 'pasien.store' sudah ada di web.php --}}
                     <form action="{{ route('pasien.store') }}" method="POST">
                         @csrf 
 
+                        <!-- 1. NO REKAM MEDIS -->
                         <div class="mb-3">
-                            <label for="nama" class="form-label fw-bold">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" 
-                                   id="nama" value="{{ old('nama') }}" placeholder="Masukkan nama pasien" required>
-                            @error('nama')
+                            <label for="no_rm" class="form-label fw-bold">No Rekam Medis</label>
+                            <input type="text" name="no_rm" 
+                                   class="form-control @error('no_rm') is-invalid @enderror" 
+                                   id="no_rm" value="{{ old('no_rm') }}" 
+                                   placeholder="Masukkan nomor rekam medis" required>
+                            @error('no_rm')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
+                        <!-- 2. NAMA PASIEN -->
                         <div class="mb-3">
-                            <label for="tgl_lahir" class="form-label fw-bold">Tanggal Lahir</label>
-                            <input type="date" name="tgl_lahir" class="form-control @error('tgl_lahir') is-invalid @enderror" 
-                                   id="tgl_lahir" value="{{ old('tgl_lahir') }}" required>
-                            @error('tgl_lahir')
+                            <label for="nama_pasien" class="form-label fw-bold">Nama Pasien</label>
+                            <input type="text" name="nama_pasien" 
+                                   class="form-control @error('nama_pasien') is-invalid @enderror" 
+                                   id="nama_pasien" value="{{ old('nama_pasien') }}" 
+                                   placeholder="Masukkan nama lengkap" required>
+                            @error('nama_pasien')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
+                        <!-- 3. JENIS KELAMIN -->
                         <div class="mb-3">
-                            <label for="alamat" class="form-label fw-bold">Alamat</label>
-                            <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" 
-                                      id="alamat" rows="3" placeholder="Alamat lengkap pasien" required>{{ old('alamat') }}</textarea>
-                            @error('alamat')
+                            <label for="jenis_kelamin" class="form-label fw-bold">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" id="jenis_kelamin" 
+                                    class="form-select @error('jenis_kelamin') is-invalid @enderror" required>
+                                <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
+                                <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                            @error('jenis_kelamin')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
+                        <!-- 4. UMUR -->
+                        <div class="mb-3">
+                            <label for="umur" class="form-label fw-bold">Umur</label>
+                            <div class="input-group">
+                                <input type="number" name="umur" 
+                                       class="form-control @error('umur') is-invalid @enderror" 
+                                       id="umur" value="{{ old('umur') }}" 
+                                       placeholder="Contoh: 25" required>
+                                <span class="input-group-text">Tahun</span>
+                            </div>
+                            @error('umur')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- TOMBOL AKSI -->
                         <div class="d-flex justify-content-between pt-3">
-                            <a href="{{ route('pasien.index') }}" class="btn btn-outline-secondary">Batal</a>
-                            <button type="submit" class="btn btn-primary px-4 shadow-sm">
-                                <i class="bi bi-save me-1"></i> Simpan Data
+                            <a href="{{ route('pasien.index') }}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Batal
+                            </a>
+                            <button type="submit" class="btn btn-primary px-5 shadow-sm">
+                                <i class="bi bi-save me-1"></i> Simpan Data Pasien
                             </button>
                         </div>
                     </form>

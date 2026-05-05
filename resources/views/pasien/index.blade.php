@@ -21,10 +21,11 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th class="px-4">Nama</th>
-                        <th>Alamat</th>
-                        <th>Tanggal Lahir</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="px-4">No_rekam_medis</th>
+                        <th>nama pasien</th>
+                        <th>jenis kelamin</th>
+                         <th>umur</th>
+                        <th class="text-center">tekan</th>
                     </tr>
                 </thead>
                 <tbody>

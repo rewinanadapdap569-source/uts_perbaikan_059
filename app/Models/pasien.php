@@ -1,10 +1,15 @@
 <?php
+ namespace App\Models;
 
-namespace App\Models;
+ use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\Model;
+ class Produk extends Model
+ {
+ // Memberi tahu Laravel bahwa Model ini untuk tabel'produks'
+ protected $table = 'pasiens';
 
-class pasien extends Model
-{
-    //
-}
+ // Mass Assignment: Mendaftarkan kolom-kolom yang
+//DIIZINKAN untuk diisi dari form
+ protected $fillable = ['nama_pasien', 'no_rekam_medis',
+'jenis_kelamin', 'umur'];
+ }

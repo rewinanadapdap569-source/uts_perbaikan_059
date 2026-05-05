@@ -2,42 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pasien;
 use Illuminate\Http\Request;
+use App\Models\Pasien; // Pastikan Model dipanggil
 
 class PasienController extends Controller
 {
-    // 1. Fungsi untuk menampilkan daftar (Sudah diperbaiki tadi)
-    public function index()
-    {
-        $pasien = Pasien::latest()->get();
-        return view('pasien.index', compact('pasien'));
-    }
-
-    // 2. FUNGSI YANG HILANG: Untuk menampilkan halaman form tambah
+    // --- TAMBAHKAN FUNGSI INI ---
     public function create()
     {
-        return view('pasien.create');
+        return view('pasien.create'); // Nama file view kamu: resources/views/pasien/create.blade.php
     }
 
-    // 3. Fungsi untuk menyimpan data yang dikirim dari form
+    // --- FUNGSI STORE KAMU YANG TADI ---
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'tgl_lahir' => 'required|date',
-            'alamat' => 'required',
+            'no_rm' => 'required',
+            'nama_pasien' => 'required',
+            'jenis_kelamin' => 'required',
+            'umur' => 'required|numeric',
         ]);
 
-        Pasien::create($request->all());
+        Pasien::create([
+            'no_rm' => $request->no_rm,
+            'nama_pasien' => $request->nama_pasien,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'umur' => $request->umur,
+        ]);
 
-        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan!');
-    }
-
-    // 4. Fungsi untuk menghapus data
-    public function destroy(Pasien $pasien)
-    {
-        $pasien->delete();
-        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil dihapus!');
+        return redirect()->route('pasien.index')->with('success', 'Data Berhasil Disimpan!');
     }
 }

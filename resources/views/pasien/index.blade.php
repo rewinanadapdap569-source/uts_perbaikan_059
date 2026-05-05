@@ -21,7 +21,7 @@
             <table class="table table-hover mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th class="px-4">No_rekam_medis</th>
+                        <th class="px-10">No_rekam_medis</th>
                         <th>nama pasien</th>
                         <th>jenis kelamin</th>
                          <th>umur</th>

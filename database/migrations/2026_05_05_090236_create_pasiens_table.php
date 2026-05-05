@@ -8,17 +8,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * Fungsi ini akan dijalankan saat kamu mengetik 'php artisan migrate'
      */
     public function up(): void
     {
         Schema::create('pasiens', function (Blueprint $table) {
             $table->id();
-             
-            $table->string('no_rekan_medis');
-            $table->string('nama_pasien');
-            $table->string('jenis_kelamin');
-            $table->integer('umur');
-            $table->timestamps();
+            $table->string('nama');    
+            $table->date('tgl_lahir');   
+            $table->text('alamat');      
+            $table->timestamps();        
         });
     }
 

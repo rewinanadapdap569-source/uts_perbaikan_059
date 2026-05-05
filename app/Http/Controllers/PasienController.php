@@ -2,57 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pasien;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-   
-     public function index() {
-    $pasiens = Pasien::all();
-    return view('pasien.index', compact('pasiens'));
-}
-
-public function create() {
-    return view('pasien.create');
-}
-
-public function store(Request $request) {
-    Pasien::create($request->all());
-    return redirect()->route('pasien.index');
-}   //
+    // 1. Fungsi untuk menampilkan daftar (Sudah diperbaiki tadi)
+    public function index()
+    {
+        $pasien = Pasien::latest()->get();
+        return view('pasien.index', compact('pasien'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-   
+    // 2. FUNGSI YANG HILANG: Untuk menampilkan halaman form tambah
+    public function create()
+    {
+        return view('pasien.create');
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    
+    // 3. Fungsi untuk menyimpan data yang dikirim dari form
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-   
-        //
-    
+        Pasien::create($request->all());
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-   
+        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan!');
+    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    
-
-    /**
-     * Remove the specified resource from storage.
-     */
-   
+    // 4. Fungsi untuk menghapus data
+    public function destroy(Pasien $pasien)
+    {
+        $pasien->delete();
+        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil dihapus!');
+    }
+}

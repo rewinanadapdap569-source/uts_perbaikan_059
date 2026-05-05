@@ -1,15 +1,26 @@
 <?php
- namespace App\Models;
 
- use Illuminate\Database\Eloquent\Model;
+namespace App\Models;
 
- class Produk extends Model
- {
- // Memberi tahu Laravel bahwa Model ini untuk tabel'produks'
- protected $table = 'pasiens';
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
- // Mass Assignment: Mendaftarkan kolom-kolom yang
-//DIIZINKAN untuk diisi dari form
- protected $fillable = ['nama_pasien', 'no_rekam_medis',
-'jenis_kelamin', 'umur'];
- }
+class Pasien extends Model
+{
+    use HasFactory;
+
+    /**
+     * Nama tabel yang digunakan (opsional jika nama tabel kamu 'pasiens')
+     */
+    protected $table = 'pasiens';
+
+    /**
+     * fillable digunakan untuk mendaftarkan kolom mana saja yang boleh diisi.
+     * Sesuaikan dengan kolom yang ada di database kamu.
+     */
+    protected $fillable = [
+        'nama', 
+        'tgl_lahir', 
+        'alamat'
+    ];
+}

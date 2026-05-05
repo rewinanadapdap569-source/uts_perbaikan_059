@@ -3,33 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pasien; // Pastikan Model dipanggil
+use App\Models\Pasien;
 
 class PasienController extends Controller
 {
-    // --- TAMBAHKAN FUNGSI INI ---
-    public function create()
-    {
-        return view('pasien.create'); // Nama file view kamu: resources/views/pasien/create.blade.php
+    public function index() {
+        $pasiens = Pasien::all();
+        return view('pasien.index', compact('pasiens'));
     }
 
-    // --- FUNGSI STORE KAMU YANG TADI ---
-    public function store(Request $request)
-    {
+    public function create() {
+        return view('pasien.create');
+    }
+
+    public function store(Request $request) {
         $request->validate([
             'no_rm' => 'required',
             'nama_pasien' => 'required',
             'jenis_kelamin' => 'required',
             'umur' => 'required|numeric',
         ]);
-
-        Pasien::create([
-            'no_rm' => $request->no_rm,
-            'nama_pasien' => $request->nama_pasien,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'umur' => $request->umur,
-        ]);
-
+        Pasien::create($request->all());
         return redirect()->route('pasien.index')->with('success', 'Data Berhasil Disimpan!');
+    }
+
+    public function edit($id) {
+        $pasien = Pasien::findOrFail($id);
+        return view('pasien.edit', compact('pasien'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'no_rm' => 'required',
+            'nama_pasien' => 'required',
+            'jenis_kelamin' => 'required',
+            'umur' => 'required|numeric',
+        ]);
+        $pasien = Pasien::findOrFail($id);
+        $pasien->update($request->all());
+        return redirect()->route('pasien.index')->with('success', 'Data Berhasil Diperbarui!');
+    }
+
+    public function destroy($id) {
+        Pasien::findOrFail($id)->delete();
+        return redirect()->route('pasien.index')->with('success', 'Data Berhasil Dihapus!');
     }
 }
